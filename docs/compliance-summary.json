@@ -1,0 +1,12 @@
+{
+  "source": "BSES_Pricing_Agent_Pilot_Productization_Proposal (1).docx",
+  "total_assessed_rows": 106,
+  "classifications": {
+    "implemented": 23,
+    "partially implemented": 47,
+    "missing": 15,
+    "blocked": 14,
+    "not applicable": 7
+  },
+  "contractual_acceptance": false
+}

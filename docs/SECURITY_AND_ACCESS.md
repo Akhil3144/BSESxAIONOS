@@ -1,0 +1,13 @@
+# Security and access
+
+Restricted loopback synthetic deployment only. No publicly served procurement files. Source downloads and business APIs require expiring bearer sessions. Stored passwords use salted scrypt; session tokens are stored only as SHA256 digests. Browser token storage is sessionStorage (XSS-sensitive; enterprise HttpOnly sessions remain pending). Bootstrap accounts have a shared configured local pilot password. No committed credentials. Login attempts are throttled per username in-process, not across replicas.
+
+Analyst: read reference/case evidence, import, create/calculate case, submit for review, export. Reviewer: read, freeze datasets, review cases, inspect audit, independently activate proposed rules. Admin: imports/cases, freeze, seed, propose rules, evaluation and review (cannot independently activate own rule). Evaluator: read reference/case evidence and predict/reveal holdouts; no imports, policy writes or exports. Certain broad read permissions are pilot defaults, pending BSES access approval.
+
+5 MiB compressed / 30 MiB expanded XLSX limits, 5,000 row bounds, CSV/XLSX allowlist, JSON spec parsing, positive finite numerical validation, parameterized ORM queries, no public file paths, same-origin frontend, no external font dependency, escaping of UI/PDF source strings. Security headers include no-store, nosniff, frame denial, restrictive CSP and no-referrer.
+
+Rules require a separate reviewer to activate; accepted cases require changes requested before recalculation. No procurement write-back APIs. Raw uploads are untrusted data; no document instructions are executed or sent to an LLM. Synthetic-only guard refuses real-data records.
+
+Pending: SSO/MFA, user management and password rotation, tenant isolation, encryption-at-rest/managed secrets, TLS/reverse proxy, distributed rate limits, antivirus/document sanitization, complete concurrency tests, database immutability/anchoring, approved retention, operational monitoring, restore drill, threat model, pen test and BSES security sign-off. No production compliance/certification claim.
+
+Audit strengthening: SQLite transactions reserve the writer before predecessor reads (BEGIN IMMEDIATE); twelve concurrent append commits are regression-tested. Dashboard activity no longer returns audit payloads. Outcome/unmapped files are refused before raw source persistence. Source snapshot hashes and benchmark report hashes are checked before calculation/prediction/export. These application controls do not replace independent provenance, external audit anchoring or enterprise security approval. Optional AI uses explicit approval/configuration gates and a closed plan schema; see AI_GUARDRAILS.md.

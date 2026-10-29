@@ -1,0 +1,44 @@
+.venv/
+.env
+data/
+__pycache__/
+.pytest_cache/
+node_modules/
+*.db
+*.db-journal
+output/browser/
+
+# macOS
+.DS_Store
+
+# Private configuration
+.env
+.env.*
+!.env.example
+
+# Databases and generated files
+data/
+output/
+tmp/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Python and development
+.venv/
+__pycache__/
+.pytest_cache/
+node_modules/
+
+# Confidential documents and procurement evidence
+BSES_Pricing_Agent_Pilot_Productization_Proposal*
+*.eml
+
+# Extracted confidential proposal content
+docs/PROPOSAL_EXTRACT.txt
+
+# Local verification artifacts
+docs/postgresql-environment.json
+docs/browser-verification.json
+docs/test-run.txt

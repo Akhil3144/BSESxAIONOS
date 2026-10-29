@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: bses_pilot
+      POSTGRES_USER: bses
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bses -d bses_pilot"]
+      interval: 5s
+      retries: 10
+  app:
+    build:
+      context: .
+      dockerfile: deployment/Dockerfile
+    ports:
+      - '127.0.0.1:8000:8000'
+    environment:
+      DEMO_PASSWORD: ${DEMO_PASSWORD:?Set DEMO_PASSWORD}
+      DATABASE_URL: postgresql+psycopg://bses:${POSTGRES_PASSWORD}@db:5432/bses_pilot
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  pgdata:

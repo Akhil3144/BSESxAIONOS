@@ -1,0 +1,11 @@
+{
+  "verified": false,
+  "tests_passed": false,
+  "status": "blocked: TEST_POSTGRES_URL not configured",
+  "local_ports": {
+    "5432": "ConnectionRefusedError",
+    "5433": "ConnectionRefusedError",
+    "15432": "ConnectionRefusedError"
+  },
+  "instructions": "Provide an authorized PostgreSQL test connection in TEST_POSTGRES_URL; script creates an isolated test schema."
+}
