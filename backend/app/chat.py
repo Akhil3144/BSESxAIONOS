@@ -86,7 +86,7 @@ def answer_question(case,runs,message,role='analyst',router=None):
         intent='unsupported';answer='I cannot award contracts, approve or reject suppliers, send counteroffers, or change SAP/SRM. Human procurement reviewers retain decision authority.'
     elif intent=='public_sources':
         from .public_sources import source_answer
-        answer,public_citations=source_answer()
+        answer,public_citations=source_answer(q)
         data={'public_sources':public_citations}
         actions=[{'type':'view_sources','label':'Open Data Sources'}]
     elif intent=='overview':

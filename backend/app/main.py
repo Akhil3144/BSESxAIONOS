@@ -71,6 +71,12 @@ def get_public_sources(u=Depends(current)):
         'Verified public price observations':len(public_prices()),'External live API connections':'None configured or verified for public procurement / prices'},
         'sources':directory(),'prices':public_prices(),'status_definitions':STATUS_DEFINITIONS}
 
+@app.get('/api/public-sources/{source_id}/availability')
+def public_source_availability(source_id:str,u=Depends(current)):
+    from .source_availability import check_availability
+    try: return check_availability(source_id)
+    except KeyError: raise HTTPException(404,'Public source not configured')
+
 @app.get('/api/cases/{id}/public-sources')
 def case_public_sources(id:str,u=Depends(current)):
     from .public_sources import comparison

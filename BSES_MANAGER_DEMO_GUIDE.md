@@ -69,24 +69,24 @@ A practical guide to demonstrating the existing Procurement Negotiation Intellig
 
 ## 4. Data Sources and Public Market Evidence
 
-**Purpose:** Distinguish authentic public context from synthetic pricing inputs.
+**Purpose:** Distinguish public context from synthetic pricing inputs.
 **Open:** Data Sources, then Price Benchmarking > External Market References
 
 **Steps:**
 
-1. Open Data Sources and review the Data Origin Summary and three public entries.
-2. Open GeM using Open Official Website. It provides procurement context; no exact cable listing or GeM API price is verified.
-3. Open the NFL technical document. Indexed text specifies 11 kV UE, three-core 185 sq. mm armoured aluminium XLPE cable on page 1, Annexure I. Direct retrieval returned HTTP 500 at review; disclose the availability limit.
-4. Review the KEI entry: Unavailable / requires replacement (HTTP 404). There is currently no accessible authenticated public price reference.
-5. Explain which source supports specifications, procurement context or potential list-price context. None currently establishes a comparable selling price.
-6. Select a procurement case in Source Comparison. Compare its synthetic quote and historical benchmark; an eligible public price can only be compared after individual verification. The seeded 95 sq. mm case differs from the NFL 185 sq. mm requirement.
-7. Open External Market References in Price Benchmarking, then Supplier & Evidence > Evidence Card > Technical Details. Public provenance is separate from the saved synthetic inputs; no target or fair-value band is changed.
+1. Open Data Sources. The three source cards show recorded availability. Use Check availability to refresh it, or Open Original Source to view the external website.
+2. GeM: https://gem.gov.in/ - procurement context only; no exact listing or GeM API price is verified.
+3. KEI third-party copy: https://www.scribd.com/document/1070412982/KEI-Cable-List-Price-13th-Mar-2026 - Third-party published price-list copy - authenticity and comparability pending. This is not an official live KEI API. Sign-in or subscription restrictions may apply.
+4. Technical document: https://cdnbbsr.s3waas.gov.in/s303412aef4dcdee4f934f7bf599f89783/uploads/2025/06/202506302010749769.pdf - Government-hosted technical specification - not price evidence. The publisher is Uttarakhand Power Corporation Ltd., replacing the prior NFL document.
+5. Review PDF pages 9-11: the scope includes 11 kV aluminium three-core XLPE cable, including 95 sq. mm. The synthetic case does not confirm armour, sheath, voltage class or standards. Source Comparison shows Not directly comparable until required details are validated.
+6. Expand Provenance and validation for the previous Raj Electricals URL (HTTP 404) and NFL URL (HTTP 500), retained with original verification results. New links returned HTTP 200 at review; accessibility does not authenticate prices.
+7. Open External Market References and the Evidence Card. Synthetic prices were not extracted from these references. No public price is verified; the benchmark, target and historical dataset remain unchanged.
 
 **Suggested question:** “Where does the pricing data come from?”
-**Expected output:** Three source records, exact links, dated retrieval results and zero verified public price observations.
-**What to say:** “The procurement dataset is synthetic. Public websites provide separately attributed supporting context. No generated price is presented as a real market observation.”
+**Expected output:** Three source cards, current links, historical provenance and zero verified public price observations.
+**What to say:** “The procurement dataset is synthetic. Public sources support separately attributed context and technical requirements. No generated price is a real market observation.”
 **Proposal link:** Evidence authenticity, source provenance and technical comparability.
-**Disclose:** The NFL download is currently unavailable despite indexed technical text. KEI returns 404. No verified public price or live procurement-price API connection exists. Dates in URLs are not authenticated publication dates.
+**Disclose:** External websites may fail, restrict access or redirect. Availability checks show clear errors and are cached for five minutes. Neither HTTP 200 nor a title date authenticates a price or effective date. No verified public price or live procurement-price API connection exists.
 
 ## 5. Historical price benchmarking
 
