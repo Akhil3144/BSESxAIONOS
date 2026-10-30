@@ -8,7 +8,7 @@ from .engine import decimal,money,financial_context,digest
 
 CHAT_VERSION='case-assistant-v1'
 SUGGESTIONS=['What does this project do?','Why is this supplier expensive?','What is the fair price?','What price should we negotiate?','Compare historical purchases.','Why did the benchmark change?','What questions should we ask the supplier?','What if the supplier reduces its quote by 5%?','Show the evidence.','Generate a Negotiation Pack.']
-Intent=Literal['overview','quote_reason','fair_value','target','history','changes','strategy','scenario','evidence','report','review','limitations','unsupported']
+Intent=Literal['overview','quote_reason','fair_value','target','history','changes','strategy','scenario','evidence','report','review','limitations','public_sources','unsupported']
 class Routing(BaseModel):
     model_config=ConfigDict(extra='forbid')
     intent:Intent
@@ -21,6 +21,7 @@ def classify(text):
     s=text.lower().strip()
     if forbidden_action(s):return 'unsupported'
     if any(k in s for k in ['what if','reduces','discount','reduce its quote','reduce quote','reduction']):return 'scenario'
+    if any(k in s for k in ['public','website','official procurement','technical specification','pricing data','real and','synthetic','original source','data come','data origin','market price','external reference']):return 'public_sources'
     if 'pack' in s or 'pdf' in s:return 'report'
     if any(k in s for k in ['benchmark change','benchmark changed','why did','changed since','previous run']):return 'changes'
     if any(k in s for k in ['evidence','citation','source','proof']):return 'evidence'
@@ -71,7 +72,7 @@ def scenario(result,message):
 def answer_question(case,runs,message,role='analyst',router=None):
     run=runs[0];r=run['result'];q=r['quote'];intent=classify(message)
     mode='Limited deterministic assistant';provider_note='Supports the suggested procurement questions; it is not unrestricted AI chat.'
-    if not forbidden_action(message) and (router or (LLMConfig.from_env().ready and os.getenv('LLM_CHAT_ENABLED','false').lower()=='true')):
+    if intent!='public_sources' and not forbidden_action(message) and (router or (LLMConfig.from_env().ready and os.getenv('LLM_CHAT_ENABLED','false').lower()=='true')):
         try:
             intent=(router or OpenAIChatRouter()).route(message,r)
             if intent not in Routing.model_fields['intent'].annotation.__args__:raise ValueError('Unsupported intent')
@@ -83,6 +84,11 @@ def answer_question(case,runs,message,role='analyst',router=None):
     supported=r['status']=='supported'
     if forbidden_action(message):
         intent='unsupported';answer='I cannot award contracts, approve or reject suppliers, send counteroffers, or change SAP/SRM. Human procurement reviewers retain decision authority.'
+    elif intent=='public_sources':
+        from .public_sources import source_answer
+        answer,public_citations=source_answer()
+        data={'public_sources':public_citations}
+        actions=[{'type':'view_sources','label':'Open Data Sources'}]
     elif intent=='overview':
         answer='This application helps procurement compare a supplier quotation with technically and commercially comparable historical purchases, prepare an evidence-backed negotiation position, and review it with a human. This workspace contains clearly labeled synthetic demonstration data. It does not award contracts or guarantee savings.'
     elif intent in ['fair_value','target','quote_reason']:

@@ -56,6 +56,31 @@ def manager_guide_markdown(u=Depends(current)):
     if not path.is_file(): raise HTTPException(503,'Manager guide has not been generated')
     return FileResponse(path,media_type='text/markdown',filename='BSES_MANAGER_DEMO_GUIDE.md')
 
+@app.get('/api/public-sources')
+def get_public_sources(u=Depends(current)):
+    from .public_sources import directory, public_prices, DATASET_STATUS, STATUS_DEFINITIONS
+    with engine.connect() as c:
+        procurement=[json.loads(p) for p in c.execute(select(records.c.payload).where(records.c.tenant==TENANT)).scalars()]
+        quotations=[json.loads(p) for p in c.execute(select(cases.c.quote).where(cases.c.tenant==TENANT)).scalars()]
+        historical=[json.loads(p) for p in c.execute(select(holdouts.c.quote).where(holdouts.c.tenant==TENANT)).scalars()]
+    return {'dataset_status':DATASET_STATUS,'summary':{
+        'Synthetic procurement records':sum(p.get('synthetic') is True for p in procurement),
+        'Demonstration quotation cases':sum(p.get('synthetic') is True and str(p.get('id','')).startswith('DEMO-QUOTE-') for p in quotations),
+        'Synthetic historical holdouts':sum(p.get('synthetic') is True for p in historical),
+        'Primary category':'11 kV XLPE cable','Public reference sources':len(directory()),
+        'Verified public price observations':len(public_prices()),'External live API connections':'None configured or verified for public procurement / prices'},
+        'sources':directory(),'prices':public_prices(),'status_definitions':STATUS_DEFINITIONS}
+
+@app.get('/api/cases/{id}/public-sources')
+def case_public_sources(id:str,u=Depends(current)):
+    from .public_sources import comparison
+    with engine.connect() as c:
+        case=scoped(c,cases,id)
+        run=c.execute(select(runs).where(runs.c.case_id==id).order_by(runs.c.created.desc()).limit(1)).mappings().first()
+        result=json.loads(run['result']) if run else None
+        if run and digest(result)!=run['sha256']: raise HTTPException(409,'Analysis evidence integrity failure')
+    return comparison(json.loads(case['quote']),result,run['id'] if run else None)
+
 @app.get('/api/health')
 def health(): return {'status':'ok','mode':'restricted synthetic pilot','live_llm':False,'llm_configured':LLMConfig.from_env().ready,'external_integrations':'disabled'}
 class Login(BaseModel):

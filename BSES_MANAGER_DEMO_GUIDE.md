@@ -1,6 +1,6 @@
 # BSES × AIONOS Manager Demo Guide
 
-A practical guide to demonstrating the existing Procurement Negotiation Intelligence application. This guide uses the verified five-section interface and a clearly labeled synthetic dataset.
+A practical guide to demonstrating the existing Procurement Negotiation Intelligence application. This guide uses the six-section interface and a clearly labeled synthetic dataset.
 
 ## Before you begin
 
@@ -67,7 +67,28 @@ A practical guide to demonstrating the existing Procurement Negotiation Intellig
 **Proposal link:** Sections 4 and 4.2: controlled evidence, source identity and traceability.
 **Disclose:** A hash proves retained-file integrity; it does not independently authenticate a real business source. Paid feeds are disabled.
 
-## 4. Historical price benchmarking
+## 4. Data Sources and Public Market Evidence
+
+**Purpose:** Distinguish authentic public context from synthetic pricing inputs.
+**Open:** Data Sources, then Price Benchmarking > External Market References
+
+**Steps:**
+
+1. Open Data Sources and review the Data Origin Summary and three public entries.
+2. Open GeM using Open Official Website. It provides procurement context; no exact cable listing or GeM API price is verified.
+3. Open the NFL technical document. Indexed text specifies 11 kV UE, three-core 185 sq. mm armoured aluminium XLPE cable on page 1, Annexure I. Direct retrieval returned HTTP 500 at review; disclose the availability limit.
+4. Review the KEI entry: Unavailable / requires replacement (HTTP 404). There is currently no accessible authenticated public price reference.
+5. Explain which source supports specifications, procurement context or potential list-price context. None currently establishes a comparable selling price.
+6. Select a procurement case in Source Comparison. Compare its synthetic quote and historical benchmark; an eligible public price can only be compared after individual verification. The seeded 95 sq. mm case differs from the NFL 185 sq. mm requirement.
+7. Open External Market References in Price Benchmarking, then Supplier & Evidence > Evidence Card > Technical Details. Public provenance is separate from the saved synthetic inputs; no target or fair-value band is changed.
+
+**Suggested question:** “Where does the pricing data come from?”
+**Expected output:** Three source records, exact links, dated retrieval results and zero verified public price observations.
+**What to say:** “The procurement dataset is synthetic. Public websites provide separately attributed supporting context. No generated price is presented as a real market observation.”
+**Proposal link:** Evidence authenticity, source provenance and technical comparability.
+**Disclose:** The NFL download is currently unavailable despite indexed technical text. KEI returns 404. No verified public price or live procurement-price API connection exists. Dates in URLs are not authenticated publication dates.
+
+## 5. Historical price benchmarking
 
 **Purpose:** Compare technically and commercially eligible purchases.
 **Open:** Price Benchmarking → Historical comparables and normalization
@@ -84,7 +105,7 @@ A practical guide to demonstrating the existing Procurement Negotiation Intellig
 **Proposal link:** Sections 5.2 and 5.3: one-family internal-history and comparable benchmarks.
 **Disclose:** The provisional technical, quantity and commercial rules require BSES SME approval. Excluded observations remain visible.
 
-## 5. Fair-value calculation
+## 6. Fair-value calculation
 
 **Purpose:** Explain the quote, historical reference, range and target in plain language.
 **Open:** Price Benchmarking
@@ -101,7 +122,7 @@ A practical guide to demonstrating the existing Procurement Negotiation Intellig
 **Proposal link:** Section 5.3: defensible fair-value assessment with confidence and limitations.
 **Disclose:** The quantile method is provisional, not a calibrated confidence interval or guaranteed market price. No unsupported FX, freight or index adjustment is inferred.
 
-## 6. Supplier intelligence
+## 7. Supplier intelligence
 
 **Purpose:** Put the quotation in its relevant supplier context.
 **Open:** Supplier & Evidence
@@ -118,7 +139,7 @@ A practical guide to demonstrating the existing Procurement Negotiation Intellig
 **Proposal link:** Section 6: supplier context embedded in the same agent, with separate source attribution.
 **Disclose:** Suppliers are fictional in this demo. Missing official evidence does not imply sanctions, debarment or legal disqualification.
 
-## 7. AI chatbot
+## 8. AI chatbot
 
 **Purpose:** Let a manager ask ordinary case questions without technical prompts.
 **Open:** AI Negotiation Chat
@@ -135,7 +156,7 @@ A practical guide to demonstrating the existing Procurement Negotiation Intellig
 **Proposal link:** Sections 4.2 and 5: explainable recommendations and source-linked negotiation support.
 **Disclose:** Without an approved configured LLM, this is a limited deterministic assistant supporting predefined questions. Optional AI routing is constrained and live connectivity is not verified.
 
-## 8. Negotiation recommendations
+## 9. Negotiation recommendations
 
 **Purpose:** Demonstrate useful preparation and a safe what-if scenario.
 **Open:** AI Negotiation Chat
@@ -152,7 +173,7 @@ A practical guide to demonstrating the existing Procurement Negotiation Intellig
 **Proposal link:** Sections 5.1 and 5.4: targets, challenge points, questions and concession strategies.
 **Disclose:** No automatic counteroffer, supplier approval or contract award is available. Walk-away policy is not approved.
 
-## 9. Evidence Cards
+## 10. Evidence Cards
 
 **Purpose:** Make the recommendation independently inspectable.
 **Open:** Supplier & Evidence → Evidence Card
@@ -169,7 +190,7 @@ A practical guide to demonstrating the existing Procurement Negotiation Intellig
 **Proposal link:** Section 4.2: source, timestamp, authentication context, transformations, comparables, confidence and approval history.
 **Disclose:** Technical lineage is preserved. Real-source authentication, approved methodology and independent BSES review remain outstanding.
 
-## 10. Negotiation Pack generation
+## 11. Negotiation Pack generation
 
 **Purpose:** Produce a shareable internal review document.
 **Open:** Reports & Validation
@@ -186,7 +207,7 @@ A practical guide to demonstrating the existing Procurement Negotiation Intellig
 **Proposal link:** Section 5.4: approval-ready negotiation packs with one-page summary and evidence.
 **Disclose:** Exports are restricted by role and remain clearly synthetic. An exported recommendation is not an award or contractual acceptance.
 
-## 11. Historical validation
+## 12. Historical validation
 
 **Purpose:** Show whether the benchmark is defensible against withheld outcomes.
 **Open:** Reports & Validation → Historical validation
@@ -203,7 +224,7 @@ A practical guide to demonstrating the existing Procurement Negotiation Intellig
 **Proposal link:** Sections 7.1 and 8.2: 8–12 eligible blinded cases, variance, failures and independent review.
 **Disclose:** The seed contains ten synthetic holdouts. Results are role-restricted; no completed evaluation is shown if none has run. BSES error thresholds and real-data credibility acceptance are pending.
 
-## 12. Human approval and audit
+## 13. Human approval and audit
 
 **Purpose:** Show that authority remains with procurement reviewers.
 **Open:** Reports & Validation → Review status
@@ -220,7 +241,7 @@ A practical guide to demonstrating the existing Procurement Negotiation Intellig
 **Proposal link:** Sections 8 and 9: human authority, approval history, governance and traceability.
 **Disclose:** The pilot role model is not enterprise SSO. An internal case status is not a signed M0, M1, M2 or M3 milestone.
 
-## 13. Final demonstration summary
+## 14. Final demonstration summary
 
 **Purpose:** Close with the business value and the remaining decisions.
 **Open:** Dashboard, then Reports & Validation
@@ -244,16 +265,17 @@ A practical guide to demonstrating the existing Procurement Negotiation Intellig
 | 1. Project introduction | Sign in → Dashboard |
 | 2. Dashboard | Dashboard |
 | 3. Data sources | Supplier & Evidence → Retained source files |
-| 4. Historical price benchmarking | Price Benchmarking → Historical comparables and normalization |
-| 5. Fair-value calculation | Price Benchmarking |
-| 6. Supplier intelligence | Supplier & Evidence |
-| 7. AI chatbot | AI Negotiation Chat |
-| 8. Negotiation recommendations | AI Negotiation Chat |
-| 9. Evidence Cards | Supplier & Evidence → Evidence Card |
-| 10. Negotiation Pack generation | Reports & Validation |
-| 11. Historical validation | Reports & Validation → Historical validation |
-| 12. Human approval and audit | Reports & Validation → Review status |
-| 13. Final demonstration summary | Dashboard, then Reports & Validation |
+| 4. Data Sources and Public Market Evidence | Data Sources, then Price Benchmarking > External Market References |
+| 5. Historical price benchmarking | Price Benchmarking → Historical comparables and normalization |
+| 6. Fair-value calculation | Price Benchmarking |
+| 7. Supplier intelligence | Supplier & Evidence |
+| 8. AI chatbot | AI Negotiation Chat |
+| 9. Negotiation recommendations | AI Negotiation Chat |
+| 10. Evidence Cards | Supplier & Evidence → Evidence Card |
+| 11. Negotiation Pack generation | Reports & Validation |
+| 12. Historical validation | Reports & Validation → Historical validation |
+| 13. Human approval and audit | Reports & Validation → Review status |
+| 14. Final demonstration summary | Dashboard, then Reports & Validation |
 
 **Tour controls:** Back revisits a step. Next advances. Skip moves past the current explanation. Exit leaves the walkthrough. Finish demo ends the last step. Suggested chat questions at steps 7 and 8 are submitted automatically once; they only read the case and append an assistant audit event.
 
