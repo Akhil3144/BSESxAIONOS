@@ -152,3 +152,20 @@ Evidence key: E=`backend/tests/test_engine.py`; P=`test_pricing_audit.py`; A=`te
 The existing application is a functioning synthetic six-stage technical demonstration, strengthened by the current pricing/evidence audit. It does **not** satisfy the proposal's real BSES credibility acceptance, M0 written approval, M1 reusable-product acceptance, M2 multi-category/source acceptance or M3 controlled-release acceptance. Do not convert a case's internal accepted status into a milestone approval.
 
 Next work is prioritized in `PRODUCTIZATION_BACKLOG.md`. Business/external dependencies are separate from missing engineering work. PostgreSQL remains **unverified**: no local server/runtime or authorized test URL was available; see `postgresql-verification.json` and the ready-to-run isolated-schema verification script.
+
+## Procurement Intelligence — Price Trends and Purchase Timing
+
+The following rows describe an approved demonstration enhancement from the subsequent implementation request. They do not amend the original proposal or establish additional contractual Phase 0 obligations; any formal scope update and business policy approval remain external.
+
+| ID | Demonstration requirement | Status | Evidence / boundary |
+|---|---|---|---|
+| PI01 | New tab below Dashboard; consistent cable selector and responsive chart | implemented | `frontend/procurement.js`, `frontend/app.js`, native accessible SVG; Chrome desktop/mobile verification |
+| PI02 | Three calendar months, Decimal monthly means/movements, extrema, counts/freshness/volatility | implemented | `procurement_trends.py`, `test_procurement_intelligence.py`; current month partial, no forecast or causal inference |
+| PI03 | Minimum deterministic supplemental synthetic evidence, separate from benchmark/holdouts/public sources | implemented | Seeded month-stable read-only fixtures, original evidence/normalization/hash and exclusions; tests for no business writes and public isolation |
+| PI04 | Four conditional buying states with delivery, lead-time, inventory and commercial constraints | implemented | `procurement_timing.py`; missing/stale/unconfirmed/infeasible inputs abstain, deferral requires full stock coverage plus falling observations and safe slack; provisional demonstration rules only |
+| PI05 | Read-only purchase timing simulator and explicit assumed future prices | implemented | Authenticated API; exact cost arithmetic, preserved saved benchmark, quantity applicability, assumption confirmations; no purchases or case mutations |
+| PI06 | Twelve deterministic chat questions and source-linked scenario consistency | implemented | `procurement_chat.py`, selected run/hash linkage and validated `timing_inputs`; no future-price or supplier-commitment invention |
+| PI07 | Guided Demo, evidence/navigation/pack and regression preservation | implemented | 17-step tour with Back/Next/Skip/Exit; 200 backend tests plus Chrome chart/simulator/chat/mobile/tour/existing-pack checks |
+| PI08 | Documentation and neutral guide, ephemeral data recreation | implemented | README, user guide, manager Markdown/PDF, `PROCUREMENT_INTELLIGENCE.md`; no overwrite of real or retained business evidence |
+
+Human procurement review, authentic live price observations, current supplier commitments, approved commercial methodology and any future forecast validation remain outside these synthetic demonstration results.

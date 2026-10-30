@@ -87,6 +87,22 @@ def case_public_sources(id:str,u=Depends(current)):
         if run and digest(result)!=run['sha256']: raise HTTPException(409,'Analysis evidence integrity failure')
     return comparison(json.loads(case['quote']),result,run['id'] if run else None)
 
+from .procurement_timing import TimingInputs
+
+@app.get('/api/procurement-intelligence')
+def procurement_intelligence(case_id:str|None=None,u=Depends(current)):
+    from .procurement_intelligence import build_intelligence
+    with engine.connect() as c: result,_=build_intelligence(c,case_id)
+    return result
+
+@app.post('/api/procurement-intelligence/simulate')
+def procurement_simulate(body:TimingInputs,case_id:str|None=None,u=Depends(current)):
+    from .procurement_intelligence import build_intelligence
+    from .procurement_timing import simulate
+    with engine.connect() as c: context,benchmark=build_intelligence(c,case_id)
+    try:return simulate(context['quote'],benchmark,context['trend'],body)
+    except ValueError as e:raise HTTPException(422,str(e))
+
 @app.get('/api/health')
 def health(): return {'status':'ok','mode':'restricted synthetic pilot','live_llm':False,'llm_configured':LLMConfig.from_env().ready,'external_integrations':'disabled'}
 class Login(BaseModel):
@@ -195,6 +211,7 @@ class ChatIn(BaseModel):
     model_config=ConfigDict(extra='forbid')
     message:str=Field(min_length=1,max_length=2000)
     run_id:str|None=None
+    timing_inputs:TimingInputs|None=None
 @app.post('/api/cases/{id}/chat')
 def case_chat(id:str,body:ChatIn,u=Depends(current)):
     from .chat import answer_question
@@ -212,7 +229,16 @@ def case_chat(id:str,body:ChatIn,u=Depends(current)):
             result=json.loads(run['result'])
             if digest(result)!=run['sha256'] or any(x['id'] not in source_ids for x in result['included']): raise HTTPException(409,'Analysis evidence integrity failure')
             parsed.append({**run,'result':result})
-    answer=answer_question(case,parsed,body.message,u['role'])
+    from .procurement_chat import is_procurement_question
+    intelligence=None
+    if is_procurement_question(body.message):
+        from .procurement_intelligence import build_intelligence
+        with engine.connect() as c: intelligence,timing_benchmark=build_intelligence(c,id,parsed[0]['id'])
+        if body.timing_inputs:
+            from .procurement_timing import simulate
+            try:intelligence['recommendation']=simulate(intelligence['quote'],timing_benchmark,intelligence['trend'],body.timing_inputs)
+            except ValueError as e:raise HTTPException(422,str(e))
+    answer=answer_question(case,parsed,body.message,u['role'],intelligence=intelligence)
     with engine.begin() as c: log(c,u['id'],'case_assistant',{'case':id,'run':answer['run_id'],'intent':answer['intent'],'mode':answer['mode']})
     return answer
 

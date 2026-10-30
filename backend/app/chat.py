@@ -5,10 +5,11 @@ import httpx
 from pydantic import BaseModel,ConfigDict
 from .ai import LLMConfig,OpenAIExplanation
 from .engine import decimal,money,financial_context,digest
+from .procurement_chat import is_procurement_question,answer_procurement
 
 CHAT_VERSION='case-assistant-v1'
 SUGGESTIONS=['What does this project do?','Why is this supplier expensive?','What is the fair price?','What price should we negotiate?','Compare historical purchases.','Why did the benchmark change?','What questions should we ask the supplier?','What if the supplier reduces its quote by 5%?','Show the evidence.','Generate a Negotiation Pack.']
-Intent=Literal['overview','quote_reason','fair_value','target','history','changes','strategy','scenario','evidence','report','review','limitations','public_sources','unsupported']
+Intent=Literal['overview','quote_reason','fair_value','target','history','changes','strategy','scenario','evidence','report','review','limitations','public_sources','procurement_intelligence','unsupported']
 class Routing(BaseModel):
     model_config=ConfigDict(extra='forbid')
     intent:Intent
@@ -20,6 +21,7 @@ def forbidden_action(text):
 def classify(text):
     s=text.lower().strip()
     if forbidden_action(s):return 'unsupported'
+    if is_procurement_question(s):return 'procurement_intelligence'
     if any(k in s for k in ['what if','reduces','discount','reduce its quote','reduce quote','reduction']):return 'scenario'
     if any(k in s for k in ['public','website','official procurement','technical specification','pricing data','real and','synthetic','original source','data come','data origin','market price','external reference']):return 'public_sources'
     if 'pack' in s or 'pdf' in s:return 'report'
@@ -69,10 +71,10 @@ def scenario(result,message):
         data['position']='above' if price>decimal(result['upper']) else 'below' if price<decimal(result['lower']) else 'within'
     return data
 
-def answer_question(case,runs,message,role='analyst',router=None):
+def answer_question(case,runs,message,role='analyst',router=None,intelligence=None):
     run=runs[0];r=run['result'];q=r['quote'];intent=classify(message)
     mode='Limited deterministic assistant';provider_note='Supports the suggested procurement questions; it is not unrestricted AI chat.'
-    if intent!='public_sources' and not forbidden_action(message) and (router or (LLMConfig.from_env().ready and os.getenv('LLM_CHAT_ENABLED','false').lower()=='true')):
+    if intent not in ['public_sources','procurement_intelligence'] and not forbidden_action(message) and (router or (LLMConfig.from_env().ready and os.getenv('LLM_CHAT_ENABLED','false').lower()=='true')):
         try:
             intent=(router or OpenAIChatRouter()).route(message,r)
             if intent not in Routing.model_fields['intent'].annotation.__args__:raise ValueError('Unsupported intent')
@@ -84,6 +86,10 @@ def answer_question(case,runs,message,role='analyst',router=None):
     supported=r['status']=='supported'
     if forbidden_action(message):
         intent='unsupported';answer='I cannot award contracts, approve or reject suppliers, send counteroffers, or change SAP/SRM. Human procurement reviewers retain decision authority.'
+    elif intent=='procurement_intelligence':
+        answer,data,citations=answer_procurement(message,q,r,intelligence)
+        for citation in citations:citation['run_id']=run['id']
+        actions=[{'type':'view_intelligence','label':'Open Procurement Intelligence'}]
     elif intent=='public_sources':
         from .public_sources import source_answer
         answer,public_citations=source_answer(q)

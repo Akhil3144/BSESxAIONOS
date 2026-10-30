@@ -46,3 +46,11 @@ SQLite is the tested local default. Docker Compose provides a PostgreSQL configu
 See [test results](docs/TEST_RESULTS.md), [deployment](docs/DEPLOYMENT_GUIDE.md), [open decisions](docs/OPEN_BUSINESS_DECISIONS.md), and generated [API schema](docs/API_OPENAPI.json).
 
 Current development audit: [pricing findings](docs/PRICING_AUDIT.md), [proposal compliance](docs/REQUIREMENTS_MATRIX.md), [prioritized Phases 1–3 backlog](docs/PRODUCTIZATION_BACKLOG.md), [optional AI configuration](docs/AI_GUARDRAILS.md), and [PostgreSQL probe](docs/postgresql-verification.json). New policy controls include quantity/age/supplier thresholds; no business default is BSES-approved.
+
+## Procurement Intelligence — Price Trends and Purchase Timing
+
+Open **Procurement Intelligence** directly below Dashboard to inspect the latest three calendar months of compatible synthetic cable observations, monthly percentage movements, original evidence and a conditional Best Time to Buy assessment. The read-only simulator checks quantity, price, delivery date, lead time, optional usable inventory and explicit commercial confirmations. It never predicts a future price; any optional later price is an entered assumption.
+
+All trends display **SYNTHETIC DEMONSTRATION — NOT LIVE MARKET PRICES**. Minimum deterministic monthly fixtures supplement missing recent records in a separate read-only trend set; the historical benchmark dataset, holdout outcomes, targets and pricing engine are unchanged. Default timing recommendations abstain when material information is missing. Public prices remain separate and unverified. Human review is required.
+
+This is an approved demonstration enhancement pending formal scope update, not an additional claimed contractual Phase 0 obligation. See [method, decision rules and limitations](docs/PROCUREMENT_INTELLIGENCE.md). The extended Guided Demo has 17 steps. Run `.venv/bin/python scripts/verify_procurement_intelligence.py --base-url http://127.0.0.1:8002` for Chrome regression verification against the current local server.

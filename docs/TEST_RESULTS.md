@@ -25,3 +25,7 @@ Environment probe found no postgres/pg_ctl/psql/Docker/Podman and no listener on
 ## External gates
 
 No real BSES source authenticity, historical business credibility, calibrated confidence, live LLM call, licensed market/supplier integration, enterprise identity/tenant certification, agreed security/UAT, restore drill, release authorization or M0/M1/M2/M3 acceptance is established by these results. Those dependencies are classified in the matrix/backlog; no contractual phase is declared accepted.
+
+## Procurement Intelligence — Price Trends and Purchase Timing
+
+The complete backend suite passed: **200 tests**, with one existing Starlette/httpx deprecation warning. Native JavaScript syntax checks passed for both `frontend/app.js` and `frontend/procurement.js`. Google Chrome checks passed the three-month chart, exact point inspection, read-only buying scenarios, assumed-price disclosure, chat scenario consistency, mobile overflow, existing benchmark/Evidence Card/Data Sources/Negotiation Pack, and all 17 guided-tour steps with Back/Next/Skip/Exit. No JavaScript errors occurred and the saved case was unchanged. The existing public-source Chrome regression also passed. The updated manager guide was rendered and visually checked across ten pages. These are synthetic software checks, not procurement policy approval or real market-price verification.

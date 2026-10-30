@@ -15,3 +15,14 @@ As evaluator/admin, freeze the historical rubric and lock predictions using a se
 Admin can propose a new minimum/quantile policy version with quantity bounds, optional maximum age, minimum supplier count and IQR diagnostic multiplier. A distinct reviewer must activate it. Other source/model/retention/category settings are displayed as disabled or pending. Do not treat an internal demo policy activation as BSES contractual approval. Read the open decisions before considering actual procurement data.
 
 Optional AI plan configuration is environment-only and requires a documented organizational transfer approval reference. No key is needed for the default workflow. See AI_GUARDRAILS.md; do not infer live connectivity from configured status. PostgreSQL verification remains pending an actual authorized test connection.
+
+## Procurement Intelligence — Price Trends and Purchase Timing
+
+1. Open the tab directly below Dashboard and select a saved 11 kV XLPE cable case. Specification consistency is enforced; incompatible observations are excluded.
+2. Inspect three calendar months, exact mean prices, monthly and overall movements, lowest/highest monthly means, latest original observation and freshness. Hover/focus a point or select a month to inspect original evidence and normalization.
+3. Read **Best Time to Buy**. Initial unknown dates, lead time, quote validity and commercial applicability produce **INSUFFICIENT EVIDENCE**. No missing commitment is inferred.
+4. Enter scenario quantity/quote, purchase and required delivery dates, supplier lead time and optional usable same-cable inventory. Review explicit scenario confirmations and evaluate. BUY NOW, NEGOTIATE / MONITOR or CONSIDER DEFERRING require their documented conditions; an infeasible delivery plan abstains.
+5. Enter an optional assumed later price only for a hypothetical cost comparison. Future prices remain uncertain. Partial inventory is not automatically converted into time coverage. Use Reset assumptions to clear the case-specific browser scenario.
+6. Ask the limited deterministic assistant about price movements, a 5,000 m scenario, a 5% quotation increase, missing inputs or next month. It uses the current entered scenario and original trend IDs. Continue to Price Benchmarking and the existing Evidence Card/Negotiation Pack workflow.
+
+All four authorized pilot roles can read and simulate. Operations are read-only; no purchase, supplier offer or case/review update occurs. Trend fixtures can recreate themselves after ephemeral SQLite loss without writing into benchmark records or holdouts. Every trend is labeled **SYNTHETIC DEMONSTRATION — NOT LIVE MARKET PRICES**. No public-source numerical price is inferred. Human review is required. This is an approved demonstration enhancement pending any formal scope update. Detailed rules and limitations: [PROCUREMENT_INTELLIGENCE.md](PROCUREMENT_INTELLIGENCE.md).
